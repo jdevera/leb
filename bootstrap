@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+BOOTSTRAP_DIR=$(dirname $BASH_SOURCE)
+LIBRARY_DIR=$BOOTSTRAP_DIR/lib
+MODULES_ACTIVE_DIR=$BOOTSTRAP_DIR/modules
+
+function source_library()
+{
+    for file in $LIBRARY_DIR/*.sh
+    do
+        source $file EXPORT
+    done
+}
+
+function main()
+{
+	source_library
+	for file in $MODULES_ACTIVE_DIR/*
+	do
+		[[ -x $file ]] && ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
+	done
+
+}
+
+
+main "$@"
