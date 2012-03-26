@@ -98,6 +98,7 @@ function package_install()
 {
     package_get_apt_program apt_program
     sudo $apt_program -y -q=10 install "$@" | indent
+    return ${PIPESTATUS[0]}
 }
 function package_has_ppa()
 {
