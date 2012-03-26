@@ -154,6 +154,10 @@ function export_all_functions()
 		export -f $funct
 	done
 }
+function is_exec()
+{
+    [[ -x $1 ]]
+}
 #}}}
 # FILES UTILS {{{
 function is_file()
