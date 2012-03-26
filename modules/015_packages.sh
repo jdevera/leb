@@ -2,4 +2,4 @@
 
 MODULE_NAME='Initial packages install'
 
-module_packages git aptitude wget curl gawk sed
+module_packages git aptitude wget curl gawk sed vim-gnome
