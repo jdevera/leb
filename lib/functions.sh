@@ -209,13 +209,21 @@ function remove_dir_if_empty()
 }
 #}}}
 # FONTS {{{
+
+function get_fonts_dir()
+{
+    local class="$2"
+    set_var "$1" "$HOME/.fonts/$class"
+}
 function font_ttf_install()
 {
     local url="$1"
-    local class="$3" # directory to use
-    local fonts_dir="$HOME/.fonts/$class"
-    create_dir "$fonts_dir" && local revert_mkdir=true
-    if [[ $url = https?://* ]]; then
+    local class="$2" # directory to use
+    local revert_mkdir=false
+    local fonts_dir
+    get_fonts_dir fonts_dir "$class"
+    create_dir "$fonts_dir" && revert_mkdir=true
+    if [[ $url = http://* ]]; then
         download_file_to "$url" "$fonts_dir"
     elif is_file "$url"; then
         cp "$url" "$fonts_dir/"
@@ -225,9 +233,18 @@ function font_ttf_install()
     fi
 
     # Update font cache
-    fc-cache -fv
+    fc-cache -f
 
     $revert_mkdir && remove_dir_if_empty "$fonts_dir"
+    return 0
+}
+function font_ttf_is_installed()
+{
+    local file="$1"
+    local class="$2" # directory to use
+    local fonts_dir
+    get_fonts_dir fonts_dir "$class"
+    is_file "$fonts_dir/$file"
 }
 #}}}
 # MODULE HELPERS {{{
