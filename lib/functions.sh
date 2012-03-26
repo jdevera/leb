@@ -207,6 +207,15 @@ function remove_dir_if_empty()
 {
     dir_is_empty "$1" && remove_dir "$1"
 }
+function link_all_programs()
+{
+    local src="$1"
+    local dest="$2"
+    for file in "$src"/*
+    do
+        [[ -x $file ]] && ln -fs "$file" "$dest"/
+    done
+}
 #}}}
 # FONTS {{{
 
