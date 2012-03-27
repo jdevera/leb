@@ -4,6 +4,12 @@ BOOTSTRAP_DIR=$(dirname $BASH_SOURCE)
 LIBRARY_DIR=$BOOTSTRAP_DIR/lib
 MODULES_ACTIVE_DIR=$BOOTSTRAP_DIR/modules
 
+function check_has_bash4
+{
+    ${BASH4:-bash} --version | grep -q "GNU bash.*version 4" || \
+        { echo  "ERROR: Bash v4 or newer is required"; exit 1; }
+}
+
 function source_library()
 {
     for file in $LIBRARY_DIR/*.sh
@@ -14,6 +20,7 @@ function source_library()
 
 function main()
 {
+    check_has_bash4
 	source_library
 	for file in $MODULES_ACTIVE_DIR/*
 	do
