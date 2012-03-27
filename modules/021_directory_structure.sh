@@ -8,7 +8,12 @@ DIR_LIST_FILE='directories.data'
 
 function get_directories()
 {
-	set_var "$1" $(cat $DIR_LIST_FILE)
+	set_var "$1" "$(cat $DIR_LIST_FILE)"
+}
+
+function home_is_empty()
+{
+    is_dir "$HOME" && [[ -z $(ls "$HOME") ]]
 }
 
 function has_directories()
@@ -35,7 +40,7 @@ function create_all_home_dirs()
 
 
 # The backup module should have run before this. So we expect home to be empty
-dir_is_empty "$HOME" || log_no_changes
+home_is_empty || log_no_changes
 
 create_all_home_dirs
 
