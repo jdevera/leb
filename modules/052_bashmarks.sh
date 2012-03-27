@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODULE_NAME='Install Bashmarks'
+MODULE_NAME='Bashmarks'
 
 log_module_start
 

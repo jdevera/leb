@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODULE_NAME=dotfiles
+MODULE_NAME='Shared Dotfiles'
 
 log_module_start
 

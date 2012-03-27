@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODULE_NAME="Home directory structure"
+MODULE_NAME='Home directory structure'
 log_module_start
 
 HOME_BACKUP_DIR="$HOME/.oldhome"

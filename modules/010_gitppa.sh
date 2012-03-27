@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-MODULE_NAME='git-ppa'
+MODULE_NAME='Git PPA'
 
 module_ppa 'ppa:git-core/ppa'
