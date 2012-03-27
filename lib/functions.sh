@@ -21,25 +21,28 @@ function log_fatal()
 function log_module_start()
 {
     local module_name=${1:-$MODULE_NAME}
-    echo "$(colored purple MODULE): $(colored light_cyan $module_name)"
+    local modname_color=white
+    local modlabel_color=light_blue
+    echo -en ".................................................[####]\033[0G"
+    echo "$(colored $modlabel_color Module): $(colored $modname_color $module_name)"
 }
 function log_module_end()
 {
-    local color=yellow
-    [[ $1 == '__noop' ]] && { color=cyan;shift; }
+    local color=light_green
+    local text='DONE'
+    [[ $1 == '__noop' ]] && { color=green;shift; text='NOOP'; }
 
     local module_name=${1:-$MODULE_NAME}
-    echo "    $(colored $color END) [$module_name]"
-    echo
+    echo -e "\033[A\033[50G[$(colored $color "$text")]"
 }
 function log_no_changes()
 {
-    echo -n "    $(colored green NO OP): No changes needed. "
     if [[ $1 == 'force' ]]
     then
+        echo -n "    $(colored green NO OP): No changes needed. "
         echo "Forced execution."
     else
-        echo "Bailing out."
+        # echo "Bailing out."
         log_module_end __noop
         exit 0
     fi
