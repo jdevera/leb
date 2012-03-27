@@ -8,7 +8,7 @@ function source_library()
 {
     for file in $LIBRARY_DIR/*.sh
     do
-        source $file EXPORT
+        source $file EXPORT || { echo "Library error" && exit 1; }
     done
 }
 
