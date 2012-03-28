@@ -29,6 +29,8 @@ These are the modules currently included:
  * Git tools
  * Packaged fonts
  * TTF fonts
+ * Packaged applications
+ * Ack-grep renaming
  * Dummy module
 
 
