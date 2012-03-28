@@ -6,6 +6,7 @@ log_module_start
 
 DOTFILES_DIR="$HOME/.dotfiles"
 DOTFILES_DATA_FILE='dotfiles.data'
+DOTFILES_REPO='git://github.com/jdevera/dotfiles.git'
 
 function load_github_config()
 {
@@ -14,7 +15,7 @@ function load_github_config()
 
 function install_dotfiles()
 {
-    git clone https://jdevera@github.com/jdevera/dotfiles.git "$DOTFILES_DIR"
+    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
     cd "$DOTFILES_DIR"
     bash install
 
