@@ -59,6 +59,13 @@ function check_all_xdg_mappings()
     done
 }
 
+function can_do_xdg()
+{
+    program_is_available xdg-user-dirs-update && \
+        program_is_available xdg-user-dir
+}
+
+can_do_xdg || log_fatal "XDG tools not available"
 check_all_xdg_mappings && log_no_changes
 set_all_xdg_dirs
 
