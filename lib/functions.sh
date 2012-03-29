@@ -18,22 +18,32 @@ function log_fatal()
     echoe "$(colored light_red FATAL): $@"
     exit 1
 }
-function log_module_start()
+function print_module_name()
 {
-    local module_name=${1:-$MODULE_NAME}
     local modname_color=white
     local modlabel_color=light_blue
-    echo -en ".................................................[####]\033[0G"
-    echo "$(colored $modlabel_color Module): $(colored $modname_color $module_name)"
+    echo "$(colored $modlabel_color Module): $(colored $modname_color $MODULE_NAME)"
+}
+function log_module_start()
+{
+    print_module_name
 }
 function log_module_end()
 {
-    local color=light_green
-    local text='DONE'
-    [[ $1 == '__noop' ]] && { color=green;shift; text='NOOP'; }
+    local color outcome
+    if [[ $1 == '__noop' ]]
+    then
+        echo -en "\033[F" # Go back to the previous line
+        color=green
+        outcome=NOOP
+    else
+        color=light_green
+        outcome=DONE
+    fi
+    echo -en ".................................................[$(colored $color $outcome)]\033[0G"
+    print_module_name
+    [[ $outcome == 'DONE' ]] && echo -e "\033[F        "
 
-    local module_name=${1:-$MODULE_NAME}
-    echo -e "\033[A\033[50G[$(colored $color "$text")]"
 }
 function log_no_changes()
 {
