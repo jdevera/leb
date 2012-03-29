@@ -18,15 +18,19 @@ function source_library()
     done
 }
 
+function run_modules()
+{
+    for file in $MODULES_ACTIVE_DIR/*
+    do
+        is_exec "$file" && ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
+    done
+}
+
 function main()
 {
     check_has_bash4
-	source_library
-	for file in $MODULES_ACTIVE_DIR/*
-	do
-		[[ -x $file ]] && ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
-	done
-
+    source_library
+    run_modules
 }
 
 
