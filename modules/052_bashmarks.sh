@@ -4,8 +4,10 @@ MODULE_NAME='Bashmarks'
 
 log_module_start
 
+load_prefix_dirs
+
 REPO_URL='https://github.com/jdevera/bashmarks'
-DEST_DIR="$HOME/other/run/share/lib/bashmarks"
+DEST_DIR="$USER_SHARE_LIB_DIR/bashmarks"
 
 is_file "$DEST_DIR/bashmarks.sh" && log_no_changes
 

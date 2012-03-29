@@ -300,6 +300,15 @@ function module_packages()
     log_module_end
 }
 # }}}
+# CONFIGURATION {{{
+function load_prefix_dirs()
+{
+    USER_PREFIX_DIR="$HOME/other/run"
+    USER_SHARE_LIB_DIR="$USER_PREFIX_DIR/share/lib"
+    USER_BIN_DIR="$USER_PREFIX_DIR/bin"
+}
+# }}}
+
 
 [[ 'EXPORT' == $1 ]] && export_all_functions
 
