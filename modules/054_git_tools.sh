@@ -13,7 +13,7 @@ changes=false
 if ! is_exec "$USER_BIN_DIR/git-wtf"
 then
     log_info "Installing git-wtf"
-    program_is_available ruby || package_install ruby1.9.1
+    program_is_available ruby || package_install ruby1.8
     download_file_to "http://git-wt-commit.rubyforge.org/git-wtf" "$USER_BIN_DIR"
     chmod +x $USER_BIN_DIR/git-wtf
     is_exec $USER_BIN_DIR/git-wtf && changes=true
@@ -22,7 +22,6 @@ fi
 if ! is_exec "$USER_BIN_DIR/hub"
 then
     log_info "Installing hub"
-    program_is_available ruby || package_install ruby1.9.1
     program_is_available rake || package_install rake
     is_dir "$USER_SHARE_LIB_DIR/hub" && remove_dir "$USER_SHARE_LIB_DIR/hub"
     git clone git://github.com/defunkt/hub.git "$USER_SHARE_LIB_DIR/hub"
