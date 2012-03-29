@@ -45,7 +45,7 @@ function set_bookmark()
     if ! grep -q "$line" "$BOOKMARKS_FILE"; then
         remove_bookmark "$name"
         echo $line >> $BOOKMARKS_FILE
-        log_info "Setting bookmark $name to $HOME/${BOOKMARKS[$name]}" | indent
+        log_info "Setting bookmark $name to $HOME/${BOOKMARKS[$name]}"
     fi
 }
 

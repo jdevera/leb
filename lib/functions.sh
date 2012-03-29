@@ -7,7 +7,7 @@ function echoe()
 }
 function log_info()
 {
-    echo "$@"
+    echo "    $@"
 }
 function log_error()
 {

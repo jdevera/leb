@@ -26,7 +26,7 @@ function set_xdg_dir()
     [[ $olddir == $fullpath ]] && return 0
 
     [[ -n $olddir ]] && local odt="(was $olddir)"
-    log_info "$dirclass directory is now $fullpath $odt" | indent
+    log_info "$dirclass directory is now $fullpath $odt"
     create_dir "$fullpath"
     xdg-user-dirs-update --set $dirclass "$fullpath"
     [[ -n $olddir ]] && remove_dir_if_empty "$olddir"
