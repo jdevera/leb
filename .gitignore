@@ -2,3 +2,4 @@ tags
 modules.*
 .*.swp
 .*.swo
+modules/dotfiles.data
