@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+MODULE_NAME='Whitelist Unity Systray'
+
+log_module_start
+
+
+SCHEMA=com.canonical.Unity.Panel
+KEY=systray-whitelist
+
+function check_whitelist()
+{
+    gsettings get $SCHEMA $KEY | grep -q "\['all'\]"
+}
+
+function systray_whitelist_all()
+{
+    gsettings set $SCHEMA $KEY "['all']"
+}
+
+check_whitelist && log_no_changes
+systray_whitelist_all
+log_module_end
