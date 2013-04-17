@@ -10,6 +10,7 @@ KEY=systray-whitelist
 
 function check_whitelist()
 {
+    gsettings list-children com.canonical.Unity.Panel 2>&1 >/dev/null || return 0
     gsettings get $SCHEMA $KEY | grep -q "\['all'\]"
 }
 
