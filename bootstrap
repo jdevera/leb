@@ -22,7 +22,10 @@ function run_modules()
 {
     for file in $MODULES_ACTIVE_DIR/*
     do
-        is_exec "$file" && ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
+        if is_exec "$file"
+        then
+            ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
+        fi
     done
 }
 
