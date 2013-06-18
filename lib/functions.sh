@@ -234,6 +234,20 @@ function link_all_programs()
         [[ -x $file ]] && ln -fs "$file" "$dest"/
     done
 }
+function all_programs_linked()
+{
+    local src="$1"
+    local dest="$2"
+    local file basefile
+    for file in "$src"/*
+    do
+        [[ ! -x $file ]] && continue
+        basefile="$(basename $file)"
+        [[ ! -h $dest/$basefile ]] && return 1
+        [[ $(readlink -es "$dest/$basefile") != $(readlink -es "$file") ]] && return 1
+    done
+    return 0
+}
 #}}}
 # FONTS {{{
 

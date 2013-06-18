@@ -9,9 +9,13 @@ load_prefix_dirs
 REPO_URL='git://github.com/jdevera/misc-scripts.git'
 DEST_DIR="$USER_SHARE_LIB_DIR/misc-scripts"
 
-is_dir "$DEST_DIR/.git" && log_no_changes
 
-git clone "$REPO_URL" "$DEST_DIR"
+if is_dir "$DEST_DIR/.git"; then
+    (cd "$DEST_DIR" && git pull >/dev/null 2>&1)
+    all_programs_linked "$DEST_DIR" "$USER_BIN_DIR" && log_no_changes
+else
+    git clone "$REPO_URL" "$DEST_DIR"
+fi
 
 # link all executables here
 link_all_programs "$DEST_DIR" "$USER_BIN_DIR"
