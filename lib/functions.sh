@@ -116,7 +116,7 @@ function package_install()
 function package_has_ppa()
 {
     local ppa="$(cut -d: -f2 <<<$1)"
-    grep -q "deb .*ppa.launchpad.net/$ppa/" /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null
+    grep -q "^deb .*ppa.launchpad.net/$ppa/" /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null
 }
 function package_add_ppa()
 {
