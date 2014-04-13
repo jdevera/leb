@@ -289,6 +289,8 @@ function font_ttf_is_installed()
 }
 #}}}
 # MODULE HELPERS {{{
+
+# A module that installs a single PPA, passed as parameter
 function module_ppa()
 {
     local ppa="$1"
@@ -298,6 +300,27 @@ function module_ppa()
     log_module_end
 }
 
+# A module that installs a series of PPAs, as they appear in the PPAS
+# associative array, where the keys are the PPA specs and the values are the
+# descriptions to show.
+function module_ppas()
+{
+    local changes=false
+    log_module_start
+    for ppa in "${!PPAS[@]}"
+    do
+        description="${PPAS[$ppa]}"
+        if ! package_has_ppa "$ppa"; then
+            echo "Adding $description PPA"
+            package_add_ppa "$ppa"
+            changes=true
+        fi
+    done
+    $changes || log_no_changes
+    log_module_end
+}
+
+# A module to install a series of packages, as they are given in the parameters
 function module_packages()
 {
     local packages="$@"
