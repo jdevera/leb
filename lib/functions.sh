@@ -229,9 +229,14 @@ function link_all_programs()
 {
     local src="$1"
     local dest="$2"
+    local destfile
     for file in "$src"/*
     do
-        [[ -x $file ]] && ln -fs "$file" "$dest"/
+        [[ ! -x $file ]] && continue
+        destfile="$dest/$(basename $file)"
+        [[ -h $destfile ]] && rm -f "$destfile"
+        is_file "$destfile" && continue
+        ln -fs "$file" "$dest"/
     done
 }
 function all_programs_linked()
@@ -242,9 +247,9 @@ function all_programs_linked()
     for file in "$src"/*
     do
         [[ ! -x $file ]] && continue
-        basefile="$(basename $file)"
-        [[ ! -h $dest/$basefile ]] && return 1
-        [[ $(readlink -es "$dest/$basefile") != $(readlink -es "$file") ]] && return 1
+        destfile="$dest/$(basename $file)"
+        [[ ! -h $destfile ]] && return 1
+        [[ $(readlink -es "$destfile") != $(readlink -es "$file") ]] && return 1
     done
     return 0
 }
