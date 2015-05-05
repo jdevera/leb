@@ -2,4 +2,11 @@
 
 MODULE_NAME='Initial packages'
 
-module_packages git aptitude wget curl gawk sed vim-gnome
+if distro_has_gui
+then
+    vim=vim-gnome
+else
+    vim=vim-nox
+fi
+
+module_packages git aptitude wget curl gawk sed $vim

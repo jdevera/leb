@@ -346,6 +346,11 @@ function load_prefix_dirs()
     USER_SHARE_LIB_DIR="$USER_PREFIX_DIR/share/lib"
     USER_BIN_DIR="$USER_PREFIX_DIR/bin"
 }
+
+function distro_has_gui()
+{
+   package_is_installed xinit
+}
 # }}}
 
 
