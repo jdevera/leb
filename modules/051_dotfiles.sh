@@ -10,13 +10,18 @@ DOTFILES_REPO='git://github.com/jdevera/dotfiles.git'
 
 function load_github_config()
 {
-    is_file "$DOTFILES_DATA_FILE" && source "$DOTFILES_DATA_FILE"
+    if is_file "$DOTFILES_DATA_FILE"
+    then
+        log_info "With preloaded github data from $DOTFILES_DATA_FILE"
+        source "$DOTFILES_DATA_FILE"
+    fi
 }
 
 function install_dotfiles()
 {
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
     cd "$DOTFILES_DIR"
+    export SKIP_VIM_PLUGINS=1
     bash install
 
     # Source to verify all is good with no errors
@@ -24,6 +29,8 @@ function install_dotfiles()
 }
 
 is_dir $DOTFILES_DIR/.git && log_no_changes
+
+is_file "$HOME/.bashrc" && mv "$HOME/.bashrc" "$HOME/.bashrc.dist"
 load_github_config
 install_dotfiles
 
