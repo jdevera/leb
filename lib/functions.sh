@@ -296,6 +296,7 @@ function module_ppa()
     local ppa="$1"
     log_module_start
     package_has_ppa "$ppa" && log_no_changes
+    program_is_available add-apt-repository || package_install software-properties-common
     package_add_ppa "$ppa"
     log_module_end
 }
@@ -311,6 +312,7 @@ function module_ppas()
     do
         description="${PPAS[$ppa]}"
         if ! package_has_ppa "$ppa"; then
+            program_is_available add-apt-repository || package_install software-properties-common
             echo "Adding $description PPA"
             package_add_ppa "$ppa"
             changes=true
