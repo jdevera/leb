@@ -4,6 +4,8 @@ MODULE_NAME='TTF fonts'
 
 log_module_start
 
+distro_has_gui || log_no_changes
+
 typeset -a FONT_URLS
 FONT_URLS=(
 'http://www.gringod.com/wp-upload/software/Fonts/Monaco_Linux.ttf'
