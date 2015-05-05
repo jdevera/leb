@@ -18,22 +18,37 @@ function source_library()
     done
 }
 
+function run_module()
+{
+    local file="$1"
+    if is_exec "$file"
+    then
+        ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
+    fi
+}
+
 function run_modules()
 {
-    for file in $MODULES_ACTIVE_DIR/*
-    do
-        if is_exec "$file"
-        then
-            ( cd "$MODULES_ACTIVE_DIR" && ./$(basename $file) )
-        fi
-    done
+    if [[ -n $1 ]]
+    then
+        log_info "Running only these modules: $*"
+        for file in "$@"
+        do
+            run_module $MODULES_ACTIVE_DIR/$file
+        done
+    else
+        for file in $MODULES_ACTIVE_DIR/*
+        do
+            run_module "$file"
+        done
+    fi
 }
 
 function main()
 {
     check_has_bash4
     source_library
-    run_modules
+    run_modules "$@"
 }
 
 
