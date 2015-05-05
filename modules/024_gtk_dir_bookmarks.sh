@@ -62,6 +62,7 @@ function check_all_bookmarks()
 
 function set_all_bookmarks()
 {
+    touch "$BOOKMARKS_FILE"
     local bname
     for bname in ${!BOOKMARKS[@]}
     do
