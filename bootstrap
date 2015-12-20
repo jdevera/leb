@@ -10,6 +10,14 @@ function check_has_bash4
         { echo  "ERROR: Bash v4 or newer is required"; exit 1; }
 }
 
+function assert_not_at_home()
+{
+    case "$(readlink -f "$BOOTSTRAP_DIR")" in
+        /home/*)
+        { echo  "Do not run from under the home directory"; exit 1; }
+    esac
+}
+
 function source_library()
 {
     for file in $LIBRARY_DIR/*.sh
@@ -47,6 +55,7 @@ function run_modules()
 function main()
 {
     check_has_bash4
+    assert_not_at_home
     source_library
     run_modules "$@"
 }
