@@ -55,7 +55,7 @@ install_hub()
     local binpath="$USER_BIN_DIR/hub"
     rm -f "$binpath"
 
-    command ln -s "$dirpath/hub" "$binpath"
+    command ln -s "$dirpath/bin/hub" "$binpath"
 
     # Install bash completion
     command ln -s "$dirpath/etc/hub.bash_completion.sh" "$LOCAL_BASH_DIR/"
