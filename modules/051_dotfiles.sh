@@ -8,6 +8,10 @@ DOTFILES_DIR="$HOME/.dotfiles"
 DOTFILES_DATA_FILE='dotfiles.data'
 DOTFILES_REPO='git://github.com/jdevera/dotfiles.git'
 
+
+# Allow unattended installation by loading here all values for environment
+# variables that are used in the dotfiles templates.
+# It is important to 'export' any variables
 function load_github_config()
 {
     if is_file "$DOTFILES_DATA_FILE"
