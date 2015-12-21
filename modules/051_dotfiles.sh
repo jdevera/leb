@@ -21,6 +21,13 @@ function load_github_config()
     fi
 }
 
+function is_dotfiles_installed()
+{
+    is_dir $DOTFILES_DIR/.git && \
+    [[ $(readlink -f ~/.bashrc) == $(readlink -f $DOTFILES_DIR/bashrc) ]] && \
+    is_dir ~/.bash.d/local/after
+}
+
 function install_dotfiles()
 {
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
@@ -32,7 +39,7 @@ function install_dotfiles()
     source $HOME/.bashrc
 }
 
-is_dir $DOTFILES_DIR/.git && log_no_changes
+is_dotfiles_installed && log_no_changes
 
 is_file "$HOME/.bashrc" && mv "$HOME/.bashrc" "$HOME/.bashrc.dist"
 load_github_config
