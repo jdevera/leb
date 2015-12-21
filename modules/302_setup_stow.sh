@@ -13,14 +13,15 @@ changed=false
 
 package_is_installed stow || log_fatal "Package stow is not installed"
 
+GROUP="$(id -gn "$USER")"
 
 if ! is_dir "$PACKAGES_DIR"; then
     SUDO=sudo create_dir "$PACKAGES_DIR" && changed=true
-    sudo chown ${USER}.${USER} $PACKAGES_DIR
+    sudo chown ${USER}:${GROUP} $PACKAGES_DIR
 fi
 if ! is_dir "$SOURCES_DIR"; then
     SUDO=sudo create_dir "$SOURCES_DIR" && changed=true
-    sudo chown ${USER}.${USER} $SOURCES_DIR
+    sudo chown ${USER}:${GROUP} $SOURCES_DIR
 fi
 
 if ! is_file ~/.stowrc
