@@ -6,7 +6,6 @@ log_module_start
 
 STOW_BASE_DIR=/opt/stow
 PACKAGES_DIR=$STOW_BASE_DIR/packages
-SOURCES_DIR=$STOW_BASE_DIR/packages
 STOW_TARGET=/usr/local
 
 changed=false
@@ -18,10 +17,6 @@ GROUP="$(id -gn "$USER")"
 if ! is_dir "$PACKAGES_DIR"; then
     SUDO=sudo create_dir "$PACKAGES_DIR" && changed=true
     sudo chown ${USER}:${GROUP} $PACKAGES_DIR
-fi
-if ! is_dir "$SOURCES_DIR"; then
-    SUDO=sudo create_dir "$SOURCES_DIR" && changed=true
-    sudo chown ${USER}:${GROUP} $SOURCES_DIR
 fi
 
 if ! is_file ~/.stowrc
