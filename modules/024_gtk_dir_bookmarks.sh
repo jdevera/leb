@@ -14,6 +14,15 @@ BOOKMARKS=(
 )
 BOOKMARKS_FILE="$HOME/.gtk-bookmarks"
 
+function choose_bookmarks_file()
+{
+    BOOKMARKS_FILE="$HOME/.config/gtk-3.0/bookmarks"
+    if [[ ! -e $BOOKMARKS_FILE ]]
+    then
+        BOOKMARKS_FILE="$HOME/.gtk-bookmarks"
+    fi
+}
+
 function get_bookmark_line()
 {
     local dest="$1"
@@ -71,6 +80,7 @@ function set_all_bookmarks()
 
 }
 
+choose_bookmarks_file
 check_all_bookmarks && log_no_changes
 set_all_bookmarks
 log_module_end
