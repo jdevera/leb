@@ -45,10 +45,12 @@ function run_modules()
             run_module $MODULES_ACTIVE_DIR/$file
         done
     else
-        while read line
+        declare -a MODULES
+        source $MODULES_ACTIVE_DIR/modules.enabled
+        for module in ${MODULES[@]}
         do
-            run_module "$MODULES_ACTIVE_DIR/$line"
-        done < $MODULES_ACTIVE_DIR/modules.enabled
+            run_module "$MODULES_ACTIVE_DIR/$module"
+        done
     fi
 }
 

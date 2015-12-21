@@ -1,19 +1,21 @@
-001_pwless_sudo.sh
-010_ppas.sh
-015_packages.sh
-020_home_backup.sh
-021_directory_structure.sh
-022_relocate_oldhome.sh
-023_xdg_directories.sh
-024_gtk_dir_bookmarks.sh
-025_whitelist_systray
-051_dotfiles.sh
-052_bashmarks.sh
-053_misc_scripts.sh
-054_git_tools.sh
-200_packaged_fonts.sh
-201_ttf_downloaded_fonts.sh
-300_packaged_apps.sh
-301_rename_ack_grep.sh
-302_setup_stow.sh
-999_dummy.sh
+MODULES=(
+    pwless_sudo.sh
+    ppas.sh
+    packages.sh
+    home_backup.sh
+    directory_structure.sh
+    relocate_oldhome.sh
+    xdg_directories.sh
+    gtk_dir_bookmarks.sh
+    whitelist_systray
+    dotfiles.sh
+    bashmarks.sh
+    misc_scripts.sh
+    git_tools.sh
+    packaged_fonts.sh
+    ttf_downloaded_fonts.sh
+    packaged_apps.sh
+    rename_ack_grep.sh
+    setup_stow.sh
+    dummy.sh
+    )
