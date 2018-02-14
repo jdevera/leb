@@ -12,6 +12,7 @@ function check_has_bash4
 
 function assert_not_at_home()
 {
+    [[ -n $LEB_SKIP_HOME_CHECK ]]  && return
     case "$(readlink -f "$BOOTSTRAP_DIR")" in
         /home/*)
         { echo  "Do not run from under the home directory"; exit 1; }
