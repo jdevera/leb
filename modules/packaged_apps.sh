@@ -2,4 +2,16 @@
 
 MODULE_NAME='Packaged applications'
 
-module_packages cscope exuberant-ctags ack-grep openssh-server stow build-essential libtool automake g++
+module_packages \
+    ack-grep \
+    automake \
+    build-essential \
+    cmake \
+    cscope \
+    exuberant-ctags \
+    g++ \
+    libtool \
+    openssh-server \
+    python3-pip \
+    stow \
+    xclip \
