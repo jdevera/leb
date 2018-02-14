@@ -339,8 +339,11 @@ function module_packages()
     done
 
     [[ -z $INST ]] && log_no_changes
-    log_info "Installing $INST"
-    package_install $INST
+    log_info "Installing packages: $INST"
+    for pkg in $INST
+    do
+        package_install $pkg || log_error "Problem installing $pkg"
+    done
     log_module_end
 }
 # }}}
