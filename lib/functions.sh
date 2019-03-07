@@ -110,7 +110,7 @@ function package_update_sources()
 function package_install()
 {
     package_get_apt_program apt_program
-    sudo $apt_program -y -q=10 install "$@" | indent
+    sudo DEBIAN_FRONTEND=noninteractive $apt_program -y -q=2 install "$@" | indent
     return ${PIPESTATUS[0]}
 }
 function package_has_ppa()
@@ -127,6 +127,7 @@ function package_add_ppa()
     sudo add-apt-repository --yes "$ppa" || log_fatal "Could not add PPA $ppa"
     package_update_sources
 }
+
 function package_get_apt_program()
 {
     local __apt_program=apt-get
