@@ -3,7 +3,6 @@
 MODULE_NAME='Home directory structure'
 log_module_start
 
-HOME_BACKUP_DIR="$HOME/.oldhome"
 DIR_LIST_FILE='directories.data'
 
 function get_directories()
