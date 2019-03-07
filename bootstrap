@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Environment options:
 # BASH4
 # OVERRIDE_MODULES_DIR
