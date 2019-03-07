@@ -340,10 +340,11 @@ function module_packages()
     done
 
     [[ -z $INST ]] && log_no_changes
+    package_update_sources
     log_info "Installing packages: $INST"
     for pkg in $INST
     do
-        package_install $pkg || log_error "Problem installing $pkg"
+        package_install "$pkg" || log_error "Problem installing $pkg"
     done
     log_module_end
 }
@@ -365,3 +366,5 @@ function distro_has_gui()
 
 [[ 'EXPORT' == $1 ]] && export_all_functions
 
+
+# vim: fdm=marker :
