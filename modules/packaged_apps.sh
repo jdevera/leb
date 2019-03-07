@@ -13,5 +13,8 @@ module_packages \
     libtool \
     openssh-server \
     python3-pip \
+    silversearcher-ag \
     stow \
+    tree \
     xclip \
+    ;
