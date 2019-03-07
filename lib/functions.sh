@@ -11,7 +11,7 @@ function log_info()
 }
 function log_error()
 {
-    echoe "ERROR: $@"
+    echoe "$(colored light_red ERROR): $@"
 }
 function log_fatal()
 {
