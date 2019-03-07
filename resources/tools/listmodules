@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+DIR="$(dirname "$0")/../../modules"
+
+source "$DIR/modules.enabled"
+for module in "${MODULES[@]}"
+do
+    eval "$(grep -h MODULE_NAME "$DIR/$module"| sed 's/$/ \&\& echo " * $MODULE_NAME"/' )"
+done
