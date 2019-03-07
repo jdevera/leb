@@ -16,7 +16,7 @@ if ! is_exec "$USER_BIN_DIR/git-wtf"
 then
     log_info "Installing git-wtf"
     program_is_available ruby || package_install ruby
-    download_file_to "http://git-wt-commit.rubyforge.org/git-wtf" "$USER_BIN_DIR"
+    download_file_to "https://raw.githubusercontent.com/DanielVartanov/willgit/master/bin/git-wtf" "$USER_BIN_DIR"
     chmod +x $USER_BIN_DIR/git-wtf
     is_exec $USER_BIN_DIR/git-wtf && changes=true
 fi
