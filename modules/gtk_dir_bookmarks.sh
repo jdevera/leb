@@ -23,12 +23,25 @@ function choose_bookmarks_file()
     fi
 }
 
+
+function encode_path()
+{
+    local path=$1
+    if program_is_available python3
+    then
+        python3 -c "import urllib.parse; print(urllib.parse.quote('''$path'''))"
+    else
+        python -c "import urllib; print urllib.quote('''$dir''')"
+    fi
+}
+
+
 function get_bookmark_line()
 {
     local dest="$1"
     local name="$2"
     local dir="$HOME/${BOOKMARKS[$name]}"
-    local encpath=$(python3 -c "import urllib.parse as up; print(up.quote('''$dir'''))")
+    local encpath=$(encode_path "$dir")
     set_var $dest "file://$encpath $name"
 }
 
