@@ -131,13 +131,7 @@ function package_add_ppa()
 function package_get_apt_program()
 {
     local __apt_program=apt-get
-    if program_is_available aptitude-curses; then
-        __apt_program=aptitude-curses
-    elif program_is_available aptitude; then
-        __apt_program=aptitude
-    elif program_is_available apt-get; then
-        __apt_program=apt-get
-    else
+    if ! program_is_available apt-get; then
         log_fatal "Can't find any package installer"
     fi
     set_var "$1" "$__apt_program"
