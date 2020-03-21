@@ -120,6 +120,18 @@ function package_install()
     sudo DEBIAN_FRONTEND=noninteractive $apt_program -y -q=2 install "$@" | indent
     return ${PIPESTATUS[0]}
 }
+function package_install_from_url()
+{
+    local name=$1
+    local package_url=$2
+    local tmp_dir=''
+    create_temp_dir "$name" tmp_dir
+    trap "cd /tmp && rm -rf \"$tmp_dir\"" EXIT
+    download_file_to "$package_url" "$tmp_dir" ||
+           log_fatal "$name: Could not download package"
+    package_install "$tmp_dir/"*.deb ||
+       log_fatal "$name: Could not install package"
+}
 function package_has_ppa()
 {
     local ppa="$(cut -d: -f2 <<<$1)"

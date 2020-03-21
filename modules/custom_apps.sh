@@ -102,13 +102,7 @@ then
 	local package_url=$(curl -s "$releases_url" |
 	    pup "a[data-os=debian][data-arch=$arch][href] attr{href}") ||
 		log_fatal 'vagrant: Could not get package URL'
-	local tmp_dir=''
-	create_temp_dir vagrant tmp_dir
-	trap "cd /tmp && rm -rf "$tmp_dir"" EXIT
-	download_file_to "$package_url" "$tmp_dir" ||
-		log_fatal 'vagrant: Could not download package'
-	package_install "$tmp_dir/"*.deb ||
-	    log_fatal 'vagrant: Could not install package'
+	package_install_from_url vagrant "$package_url"
     }
 
     install_vagrant && changes=true
