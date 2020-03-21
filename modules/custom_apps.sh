@@ -31,6 +31,32 @@ fi
 
 # FZF END }}}
 
+# FD {{{
+if ! has_command fd
+then
+    function install_fd()
+    {
+	local RELEASES_URL='https://api.github.com/repos/sharkdp/fd/releases/latest'
+	local arch=$(get_architecture)
+	local package_url=$(curl -s "$RELEASES_URL" |
+	    jq -r ".assets[] | select(.name | test(\"fd_.+${arch}.deb\")) | .browser_download_url") ||
+		log_fatal 'fd: Could not get package URL'
+	local tmp_dir=''
+	create_temp_dir fd tmp_dir
+	trap "cd /tmp && rm -rf "$tmp_dir"" EXIT
+	download_file_to "$package_url" "$tmp_dir" ||
+		log_fatal 'fd: Could not download package'
+	package_install "$tmp_dir"/*.deb ||
+		log_fatal 'fd: Could not install package'
+
+    }
+
+    install_fd && changes=true
+fi
+
+# FD END }}}
+
+
 
 $changes || log_no_changes
 log_module_end

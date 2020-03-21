@@ -381,6 +381,17 @@ function distro_has_gui()
    package_is_installed xinit
 }
 # }}}
+# SYSTEM {{{
+function get_architecture()
+{
+   if uname -a | grep -q x86_64
+   then
+      echo amd64
+   else
+      echo i386
+   fi
+}
+# }}}
 
 
 [[ 'EXPORT' == $1 ]] && export_all_functions
