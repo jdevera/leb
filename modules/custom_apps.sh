@@ -58,7 +58,35 @@ fi
 
 # FD END }}}
 
+# PUP {{{
+if ! has_command pup
+then
+    function install_pup()
+    {
+	log_info Installing pup
+	local project='ericchiang/pup'
+	local arch=$(get_architecture)
+	local package_url=$(github_latest_release "$project" |
+	    jq -r ".assets[] | select(.name | test(\"pup_.*_linux_amd64.zip\")) | .browser_download_url") ||
+		log_fatal 'pup: Could not get package URL'
+	local tmp_dir=''
+	create_temp_dir pup tmp_dir
+	trap "cd /tmp && rm -rf "$tmp_dir"" EXIT
+	download_file_to "$package_url" "$tmp_dir" ||
+		log_fatal 'pup: Could not download package'
+	{
+	    cd "$tmp_dir" &&
+		unzip *.zip &&
+		cp "$tmp_dir/pup" "$USER_BIN_DIR/pup" &&
+		chmod +x "$USER_BIN_DIR/pup"
+	} ||
+	    log_fatal 'pup: Could not install downloaded package'
+    }
 
+    install_pup && changes=true
+fi
+
+# PUP END }}}
 
 $changes || log_no_changes
 log_module_end
