@@ -17,6 +17,7 @@ if ! has_command fzf
 then
     function install_fzf()
     {
+	log_info Installing fzf
 	git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf ||
 	    log_fatal 'fzf: Could not clone repo'
 	$HOME/.fzf/install \
@@ -36,9 +37,10 @@ if ! has_command fd
 then
     function install_fd()
     {
-	local RELEASES_URL='https://api.github.com/repos/sharkdp/fd/releases/latest'
+	log_info Installing fd
+	local project='sharkdp/fd'
 	local arch=$(get_architecture)
-	local package_url=$(curl -s "$RELEASES_URL" |
+	local package_url=$(github_latest_release "$project" |
 	    jq -r ".assets[] | select(.name | test(\"fd_.+${arch}.deb\")) | .browser_download_url") ||
 		log_fatal 'fd: Could not get package URL'
 	local tmp_dir=''

@@ -392,6 +392,14 @@ function get_architecture()
    fi
 }
 # }}}
+# INTERNET {{{
+function github_latest_release()
+{
+   local project=$1
+   local url="https://api.github.com/repos/$project/releases/latest"
+   curl -s "$url"
+}
+# }}}
 
 
 [[ 'EXPORT' == $1 ]] && export_all_functions
