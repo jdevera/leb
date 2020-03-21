@@ -146,7 +146,6 @@ function package_add_ppa()
     sudo add-apt-repository --yes "$ppa" || log_fatal "Could not add PPA $ppa"
     package_update_sources
 }
-
 function package_get_apt_program()
 {
     local __apt_program=apt-get
@@ -154,6 +153,11 @@ function package_get_apt_program()
         log_fatal "Can't find any package installer"
     fi
     set_var "$1" "$__apt_program"
+}
+function package_add_signature()
+{
+    local url=$1
+    curl -s "$url" | sudo apt-key add - &>/dev/null
 }
 # }}}
 # SHELL UTILS {{{
@@ -204,6 +208,12 @@ function remote_file_is_present()
     local url="$1"
     program_is_available curl || log_fatal "Can't find curl"
     curl -I "$url" | grep -q 'HTTP.*200 OK'
+}
+function to_protected_file
+{
+    local file=$1
+    program_is_available tee || log_fatal "Can't find required tool: tee"
+    sudo tee "$file" > /dev/null
 }
 #}}}
 # DIRECTORIES UTILS {{{
