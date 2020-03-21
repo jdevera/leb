@@ -96,6 +96,13 @@ function colored()
 }
 # }}}
 # PACKAGE MANAGEMENT {{{
+function brew_is_installed()
+{
+   local package=$1
+    program_is_available brew || log_fatal "Can't find brew"
+    program_is_available jq || log_fatal "Can't find jq"
+    [[ $(brew info --json "$package" | jq "map(select(.installed != [])) == []") == 'false' ]]
+}
 function package_is_installed()
 {
     local package="$1"
@@ -339,6 +346,24 @@ function module_packages()
     for pkg in $INST
     do
         package_install "$pkg" || log_error "Problem installing $pkg"
+    done
+    log_module_end
+}
+function module_brew_packages()
+{
+    local packages="$@"
+    log_module_start
+    local INST=''
+    for pkg in $packages
+    do
+        brew_is_installed "$pkg" || INST="$INST $pkg"
+    done
+
+    [[ -z $INST ]] && log_no_changes
+    log_info "Installing brew packages: $INST"
+    for pkg in $INST
+    do
+        brew install "$pkg" || log_error "Problem installing $pkg"
     done
     log_module_end
 }

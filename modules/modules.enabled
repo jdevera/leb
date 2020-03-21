@@ -13,6 +13,7 @@ MODULES=(
     dotfiles.sh
     brew.sh
     brew_completions.sh
+    brew_packages.sh
     bashmarks.sh
     misc_scripts.sh
     git_tools.sh
