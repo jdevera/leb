@@ -12,6 +12,7 @@ MODULES=(
     whitelist_systray
     dotfiles.sh
     brew.sh
+    brew_completions.sh
     bashmarks.sh
     misc_scripts.sh
     git_tools.sh
