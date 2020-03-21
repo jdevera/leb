@@ -18,4 +18,5 @@ module_packages \
     tree \
     xclip \
     iotop \
+    git-cola \
     ;
