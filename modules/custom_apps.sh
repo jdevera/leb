@@ -10,6 +10,8 @@ function has_command()
 
 log_module_start
 
+load_prefix_dirs
+
 changes=false
 
 # FZF {{{
@@ -87,6 +89,32 @@ then
 fi
 
 # PUP END }}}
+
+# VAGRANT {{{
+if ! has_command vagrant
+then
+    function install_vagrant()
+    {
+	log_info Installing vagrant
+	has_command pup || log_fatal 'vagrant: Requires pup to install'
+	local releases_url='https://www.vagrantup.com/downloads.html'
+	local arch=$(get_architecture i686 x86_64)
+	local package_url=$(curl -s "$releases_url" |
+	    pup "a[data-os=debian][data-arch=$arch][href] attr{href}") ||
+		log_fatal 'vagrant: Could not get package URL'
+	local tmp_dir=''
+	create_temp_dir vagrant tmp_dir
+	trap "cd /tmp && rm -rf "$tmp_dir"" EXIT
+	download_file_to "$package_url" "$tmp_dir" ||
+		log_fatal 'vagrant: Could not download package'
+	package_install "$tmp_dir/"*.deb ||
+	    log_fatal 'vagrant: Could not install package'
+    }
+
+    install_vagrant && changes=true
+fi
+
+# VAGRANT END }}}
 
 $changes || log_no_changes
 log_module_end

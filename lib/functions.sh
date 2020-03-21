@@ -384,11 +384,14 @@ function distro_has_gui()
 # SYSTEM {{{
 function get_architecture()
 {
+   local name32=${1:-i386}
+   local name64=${1:-amd64}
+
    if uname -a | grep -q x86_64
    then
-      echo amd64
+      echo $name64
    else
-      echo i386
+      echo $name32
    fi
 }
 # }}}
