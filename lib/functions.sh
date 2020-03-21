@@ -176,7 +176,7 @@ function download_file_to()
 {
     local url="$1"
     local dir="$2"
-    is_dir $dir || log_fatal "Can't download file to $dir. Directory not found"
+    is_dir "$dir" || log_fatal "Can't download file to $dir. Directory not found"
     program_is_available wget || log_fatal "Can't find wget"
     wget --no-check-certificate -q -P "$dir" "$url"
 }
