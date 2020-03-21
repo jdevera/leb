@@ -201,7 +201,7 @@ function create_temp_dir()
 {
     local tpl="$1"
     local var="$2"
-    local dir=$(mktemp --tmpdir "${tpl}_XXXXXX")
+    local dir=$(mktemp --directory "${tpl}_XXXXXX" --tmpdir)
     set_var "$var" "$dir"
 }
 function check_is_dir()
