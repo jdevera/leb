@@ -17,4 +17,5 @@ module_packages \
     stow \
     tree \
     xclip \
+    iotop \
     ;
