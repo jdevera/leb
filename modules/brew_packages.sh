@@ -5,4 +5,5 @@ MODULE_NAME='Homebrew packages'
 module_brew_packages \
     hello \
     tmuxinator \
+    tig \
     ;
