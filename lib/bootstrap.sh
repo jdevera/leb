@@ -97,7 +97,7 @@ load_and_check_modules()
     done
 }
 
-print_module_list()
+function print_module_list()
 {
     load_and_check_modules "$@"
     print_banner
@@ -106,7 +106,7 @@ print_module_list()
     local file
     for file in ${MODULES[@]}
     do
-        echo "- $file"
+        echo "$file :: $(module_name "$file")"
     done
 }
 
@@ -137,5 +137,13 @@ Module execution is designed to be **idempotent**, so the bootstrapper can be
 run on an already configured box to apply only the changes that have not
 already been applied.
 EOU
+}
+
+function module_name()
+{
+    local module=$1
+    local MODULE_NAME
+    eval "$(grep -h ^MODULE_NAME "$MODULES_ACTIVE_DIR/$module")"
+    echo $MODULE_NAME
 }
 
