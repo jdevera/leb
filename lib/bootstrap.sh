@@ -77,7 +77,7 @@ function run_modules()
     done
 }
 
-load_and_check_modules()
+function load_and_check_modules()
 {
     local file
 
@@ -122,7 +122,7 @@ function print_banner()
 EOH
 }
 
-usage_header()
+function usage_header()
 {
         cat <<EOU
 Jacobo de Vera's Linux Environment Bootstrapper
