@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$0")/../../modules"
-
-source "$DIR/modules.enabled"
-for module in "${MODULES[@]}"
+# Find the root dir
+dir=$(dirname ${BASH_SOURCE[0]})
+command cd "$dir"
+while [[ 1 ]]
 do
-    eval "$(grep -h MODULE_NAME "$DIR/$module"| sed 's/$/ \&\& echo " * $MODULE_NAME"/' )"
+    [[ -e $dir/bootstrap ]] && break
+    [[ $dir == '/' ]] && break
+    command cd ..
+    dir=$(pwd)
 done
+
+$dir/bootstrap --list | awk -F' :: ' '/::/{print "* " $2}'
