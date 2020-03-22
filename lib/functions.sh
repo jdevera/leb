@@ -212,18 +212,6 @@ function download_file_to()
     program_is_available wget || log_fatal "Can't find wget"
     wget --no-check-certificate -q -P "$dir" "$url"
 }
-function remote_file_is_present()
-{
-    local url="$1"
-    program_is_available curl || log_fatal "Can't find curl"
-    curl -I "$url" | grep -q 'HTTP.*200 OK'
-}
-function to_protected_file
-{
-    local file=$1
-    program_is_available tee || log_fatal "Can't find required tool: tee"
-    sudo tee "$file" > /dev/null
-}
 #}}}
 # DIRECTORIES UTILS {{{
 function is_dir()
@@ -241,10 +229,6 @@ function create_temp_dir()
     local var="$2"
     local dir=$(mktemp --directory "${tpl}_XXXXXX" --tmpdir)
     set_var "$var" "$dir"
-}
-function check_is_dir()
-{
-    assert "$1 should be a directory, but it's not!" is_dir "$1"
 }
 function dir_is_empty()
 {
