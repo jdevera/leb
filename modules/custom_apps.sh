@@ -118,12 +118,12 @@ then
 	log_info Installing virtualbox
 	local ubuntu_codename=$(lsb_release -cs)
 	local sources_line="deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $ubuntu_codename contrib"
-	echo "$sources_line" | to_protected_file /etc/apt/sources.list.d/virtualbox.list
+
 	package_add_signature 'https://www.virtualbox.org/download/oracle_vbox_2016.asc' ||
 	    log_fatal "virtualbox: Could not add package source signature"
 	package_add_signature 'https://www.virtualbox.org/download/oracle_vbox.asc' ||
 	    log_fatal "virtualbox: Could not add package source signature"
-	package_update_sources
+	package_add_repository "$sources_line"
 	package_install virtualbox-6.1 ||
 	    log_fatal "virtualbox: Could not install package"
 
@@ -133,5 +133,6 @@ then
 fi
 
 # VIRTUALBOX END }}}
+
 $changes || log_no_changes
 log_module_end

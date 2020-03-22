@@ -137,6 +137,15 @@ function package_has_ppa()
     local ppa="$(cut -d: -f2 <<<$1)"
     grep -q "^deb .*ppa.launchpad.net/$ppa/" /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null
 }
+function package_add_repository()
+{
+    local source="$1"
+    program_is_available add-apt-repository ||
+        log_fatal "Can't add package source, add-apt-repository is missing"
+    log_info "Adding package source: $source"
+    sudo add-apt-repository --yes "$source" | indent ||
+       log_fatal "Could not add package source $source"
+}
 function package_add_ppa()
 {
     local ppa="$1"
