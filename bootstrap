@@ -7,13 +7,116 @@ set -e
 # OVERRIDE_MODULES_DIR
 
 BOOTSTRAP_DIR=$(dirname "$BASH_SOURCE")
-LIBRARY_DIR=$BOOTSTRAP_DIR/lib
 
-source $LIBRARY_DIR/bootstrap.sh
+source $BOOTSTRAP_DIR/lib/bootstrap.sh
+
+cd "$(readlink -f $BOOTSTRAP_DIR)"
+
+
+
+usage()
+{
+    if [[ $1 == '--full' ]]
+    then
+        print_banner
+        usage_header
+    fi
+    cat <<EOU
+
+Usage:
+
+./bootstrap [OPTIONS] [MODULES]
+
+Where MODULES is a list of module files to run, separated by spaces, and
+
+OPTIONS is any combination of:
+
+    -b, --bash4 PATH_TO_BASH_4
+        In case the first hit of "bash" in the PATH is not Bash v4, a full path
+        to the right bash binary can be specified here.
+
+    -d, --modules-dir DIRECTORY_WITH_MODULES
+        If you want to use your own custom set of modules, put them in a
+        different directory and don't forget to have the right modules.enabled
+        file in it.
+
+    -H, --no-home-check
+        LEB does not want to run in your home directory because part of its job
+        is to rearrange everything there. This can cause trouble if LEB is part
+        of that rearrangement. If you are running it a second time it's
+        probably safe to run from the home directory. Use this flag to allow
+        that.
+
+    -l|--list
+        List modules and exit, does not run anything.
+
+    -h|--help
+        Print this usage text and exit.
+EOU
+}
+
+
+# Argument parsing: {{{
+LEB_PRINT_MODULE_LIST=
+LEB_SKIP_HOME_CHECK=
+LEB_MODULES_DIR=
+LEB_HELP=
+
+positional_args=()
+while [[ $# -gt 0 ]]
+do
+arg=$1
+value=$2
+case $arg in
+    -b|--bash)
+        assert_has_value "$arg" "$value"
+        BASH4=$value
+        shift
+        ;;
+    -d|--modules-dir)
+        assert_has_value "$arg" "$value"
+        LEB_MODULES_DIR=$value
+        shift
+        ;;
+    -H|--no-home-check)
+        LEB_SKIP_HOME_CHECK=1
+        ;;
+    -l|--list)
+        LEB_PRINT_MODULE_LIST=1
+        ;;
+    -h|--help)
+        LEB_HELP=1
+        break
+        ;;
+    *)
+        if [[ $arg =~ ^- ]]
+        then
+            bad_usage "Unknown argument: $arg"
+        fi
+        positional_args+=( "$arg" )
+    ;;
+esac
+shift
+done
+set -- "${positional_args[@]}" # Only positional arguments from here on
+
+# Argument parsing }}}
 
 
 function main()
 {
+    if [[ -n $LEB_HELP ]]
+    then
+        usage --full
+        return 0
+    fi
+
+    if [[ -n $LEB_PRINT_MODULE_LIST ]]
+    then
+        print_module_list "$@"
+        return 0
+    fi
+
     check_has_bash4
     assert_not_root
     assert_not_at_home

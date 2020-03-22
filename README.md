@@ -1,6 +1,6 @@
 # LEB: Linux Environment Bootstrapper
 
-LEB sets up a fresh Linux environment with many of my preferences an customisations.
+LEB sets up a fresh Linux environment with many of my preferences and customisations.
 
 It does so through the execution of a series of specialised modules that perform the various tasks.
 
@@ -21,10 +21,14 @@ cd leb-master
 
 ## Running from within the home directory
 
-Part of what LEB does involves restructuring the user's home directory. Because of the LEB will refuse to run from the home directory. If you want to bypass this, define and export  an environment variable called `OVERRIDE_MODULES_DIR`:
+Part of what LEB does involves restructuring the user's home directory. Because of the LEB will refuse to run from the home directory. If you want to bypass this, use the `-H` or `--no-home-check` flags.
+
+## Other options
+
+Ask the bootstrapper for help to see all options:
 
 ```bash
-OVERRIDE_MODULES_DIR=1 ./bootstrap
+./bootstrap --help
 ```
 
 ## Modules
