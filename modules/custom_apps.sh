@@ -134,5 +134,27 @@ fi
 
 # VIRTUALBOX END }}}
 
+# DOCKER {{{
+if ! has_command docker
+then
+    function install_docker()
+    {
+	log_info Installing docker
+	local ubuntu_codename=$(lsb_release -cs)
+	local sources_line="deb [arch=amd64] https://download.docker.com/linux/ubuntu $ubuntu_codename stable"
+
+	package_add_signature 'https://download.docker.com/linux/ubuntu/gpg' ||
+	    log_fatal "docker: Could not add package source signature"
+	package_add_repository "$sources_line"
+	package_install docker-ce docker-ce-cli containerd.io ||
+	    log_fatal "docker: Could not install packages"
+
+    }
+
+    install_docker && changes=true
+fi
+
+# DOCKER END }}}
+
 $changes || log_no_changes
 log_module_end
