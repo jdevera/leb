@@ -3,11 +3,6 @@
 
 MODULE_NAME='Custom installation apps'
 
-function has_command()
-{
-    type "$1" >& /dev/null
-}
-
 log_module_start
 
 load_prefix_dirs
@@ -15,7 +10,7 @@ load_prefix_dirs
 changes=false
 
 # FZF {{{
-if ! has_command fzf
+if ! program_is_available fzf
 then
     function install_fzf()
     {
@@ -35,7 +30,7 @@ fi
 # FZF END }}}
 
 # FD {{{
-if ! has_command fd
+if ! program_is_available fd
 then
     function install_fd()
     {
@@ -61,7 +56,7 @@ fi
 # FD END }}}
 
 # PUP {{{
-if ! has_command pup
+if ! program_is_available pup
 then
     function install_pup()
     {
@@ -91,12 +86,12 @@ fi
 # PUP END }}}
 
 # VAGRANT {{{
-if ! has_command vagrant
+if ! program_is_available vagrant
 then
     function install_vagrant()
     {
 	log_info Installing vagrant
-	has_command pup || log_fatal 'vagrant: Requires pup to install'
+	program_is_available pup || log_fatal 'vagrant: Requires pup to install'
 	local releases_url='https://www.vagrantup.com/downloads.html'
 	local arch=$(get_architecture i686 x86_64)
 	local package_url=$(curl -s "$releases_url" |
@@ -111,7 +106,7 @@ fi
 # VAGRANT END }}}
 
 # VIRTUALBOX {{{
-if ! has_command virtualbox
+if ! program_is_available virtualbox
 then
     function install_virtualbox()
     {
@@ -135,7 +130,7 @@ fi
 # VIRTUALBOX END }}}
 
 # DOCKER {{{
-if ! has_command docker
+if ! program_is_available docker
 then
     function install_docker()
     {
