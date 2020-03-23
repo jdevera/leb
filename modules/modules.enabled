@@ -15,6 +15,7 @@ MODULES=(
     brew_completions.sh
     brew_packages.sh
     pipx.sh
+    pipx_packages.sh
     custom_apps.sh
     bashmarks.sh
     misc_scripts.sh

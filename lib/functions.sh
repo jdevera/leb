@@ -198,6 +198,10 @@ function is_exec()
 {
     [[ -x $1 ]]
 }
+function reload_rc()
+{
+   source $HOME/.bashrc
+}
 #}}}
 # FILES UTILS {{{
 function is_file()
