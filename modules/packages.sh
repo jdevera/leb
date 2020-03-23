@@ -11,4 +11,5 @@ module_packages \
     sed \
     vim \
     wget \
+    python3-venv \
     ;
