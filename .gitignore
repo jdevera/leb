@@ -3,3 +3,4 @@ modules.*
 .*.swp
 .*.swo
 modules/dotfiles.data
+.vagrant
